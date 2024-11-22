@@ -1,2 +1,6 @@
-# etl-postgres-hadoop
-Transfer large volumes of data from a PostgreSQL database to a two-node Hadoop cluster using Docker
+
+# Hadoop + PostgreSQL on Docker
+
+This project sets up a Dockerized architecture including:
+- A PostgreSQL database
+- Hadoop HDFS with 1 NameNode and 2 DataNodes

@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    secrets:
+      - postgres_password
+
+  # Hadoop NameNode
+  namenode:
+    image: bde2020/hadoop-namenode:latest
+    container_name: namenode
+    environment:
+      - CLUSTER_NAME=my-hadoop-cluster
+    ports:
+      - "9870:9870"  # Web UI
+      - "9000:9000"  # RPC
+    networks:
+      - hadoop-net
+    volumes:
+      - namenode_data:/hadoop/dfs/name
+
+  # Hadoop DataNode 1
+  datanode1:
+    image: bde2020/hadoop-datanode:latest
+    container_name: datanode1
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+    ports:
+      - "9864:9864"  # Web UI
+    networks:
+      - hadoop-net
+    volumes:
+      - datanode1_data:/hadoop/dfs/data
+
+  # Hadoop DataNode 2
+  datanode2:
+    image: bde2020/hadoop-datanode:latest
+    container_name: datanode2
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+    ports:
+      - "9865:9864"  # Web UI
+    networks:
+      - hadoop-net
+    volumes:
+      - datanode2_data:/hadoop/dfs/data
+
+volumes:
+  postgres_data:
+  namenode_data:
+  datanode1_data:
+  datanode2_data:
+
+secrets:
+  postgres_password:
+    file: ./postgres_password.txt
+
+networks:
+  hadoop-net:
