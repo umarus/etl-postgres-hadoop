@@ -29,5 +29,10 @@ docker exec -it postgres  psql -U postgres
 
  
 
- # 4. Next, we will extract data from the database, transform it into a CSV format, and load it into Hadoop
-
+ # 4. Next, we will extract data from the database, transform it into a CSV format, and load it into Hadoop 
+     fromdb_tohadoop.py
+    
+     The process in the script is broken down into three main stages:
+     Extracting data from PostgreSQL,
+     Transforming data into a CSV file, 
+     and Loading the data into Hadoop HDFS.
