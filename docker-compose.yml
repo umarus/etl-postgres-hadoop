@@ -1,69 +1,60 @@
+version: '3.8'
 
 services:
-  # PostgreSQL Database
-  postgres:
-    image: postgres:latest
-    container_name: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: mydb
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    
-
-  # Hadoop NameNode
   namenode:
     image: bde2020/hadoop-namenode:latest
     platform: linux/amd64
     container_name: namenode
-    environment:
-      - CLUSTER_NAME=my-hadoop-cluster
+    restart: always
     ports:
-      - "9870:9870"  # Web UI
-      - "9000:9000"  # RPC
-    networks:
-      - hadoop-net
+      - 9870:9870
+      - 9000:9000
     volumes:
-      - namenode_data:/hadoop/dfs/name
+      - hadoop_namenode:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./hadoop.env
 
-  # Hadoop DataNode 1
   datanode1:
     image: bde2020/hadoop-datanode:latest
     platform: linux/amd64
     container_name: datanode1
-    environment:
-      - SERVICE_PRECONDITION=namenode:9870
-    ports:
-      - "9864:9864"  # Web UI
-    networks:
-      - hadoop-net
+    restart: always
     volumes:
-      - datanode1_data:/hadoop/dfs/data
+      - hadoop_datanode1:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - ./hadoop.env
 
-  # Hadoop DataNode 2
   datanode2:
     image: bde2020/hadoop-datanode:latest
     platform: linux/amd64
     container_name: datanode2
-    environment:
-      - SERVICE_PRECONDITION=namenode:9870
-    ports:
-      - "9865:9864"  # Web UI
-    networks:
-      - hadoop-net
+    restart: always
     volumes:
-      - datanode2_data:/hadoop/dfs/data
+      - hadoop_datanode2:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - ./hadoop.env
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hadoopdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
+  hadoop_namenode:
+  hadoop_datanode1:
+  hadoop_datanode2:
   postgres_data:
-  namenode_data:
-  datanode1_data:
-  datanode2_data:
-
-
-
-networks:
-  hadoop-net:
