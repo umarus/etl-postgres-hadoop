@@ -1,5 +1,5 @@
 
-# Hadoop + PostgreSQL on Docker
+# PostgreSQL Hadoop Spark on Docker
 
 This project sets up a Dockerized architecture including:
 - A PostgreSQL database
