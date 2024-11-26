@@ -36,3 +36,7 @@ docker exec -it postgres  psql -U postgres
      Extracting data from PostgreSQL,
      Transforming data into a CSV file, 
      and Loading the data into Hadoop HDFS.
+
+<img width="675" alt="Capture d’écran 2024-11-26 à 15 18 16" src="https://github.com/user-attachments/assets/53f2730f-9948-4a32-a298-17d1f2f6e8da">
+
+#5 I am going to add Apache Spark to interact with the data in Hadoop.
