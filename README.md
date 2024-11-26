@@ -4,6 +4,12 @@
 This project sets up a Dockerized architecture including:
 - A PostgreSQL database
 - Hadoop HDFS with 1 NameNode and 2 DataNodes
+- Apache Spark
+
+# Goal.
+  This mini-project aims to load data into a PostgreSQL database, extract and transform it, and then load it onto a Hadoop cluster.
+  Finally,  we will use Apache Spark on top of Hadoop to manipulate the data.
+  
 
 # 1. Connect to the postgres database .
 
