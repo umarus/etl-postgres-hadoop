@@ -29,5 +29,5 @@ docker exec -it postgres  psql -U postgres
 
  
 
- # 4. next step we extract data from the database , transform to csv and load it to hadoop
+ # 4. Next, we will extract data from the database, transform it into a CSV format, and load it into Hadoop
 
