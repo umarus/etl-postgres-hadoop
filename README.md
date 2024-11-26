@@ -24,8 +24,10 @@ URL = https://www.kaggle.com/api/v1/datasets/download/octopusteam/full-imdb-data
 
 docker exec -it postgres  psql -U postgres
 
- SELECT  title , genres, numvotes , releaseyear FROM  imdb WHERE releaseyear > 2000 LIMIT 5 ;
+<img width="727" alt="Capture d’écran 2024-11-26 à 15 09 43" src="https://github.com/user-attachments/assets/06f4bce0-e001-4e62-b174-4f39ac8c1c89">
 
+
+ 
 
  # 4. next step we extract data from the database , transform to csv and load it to hadoop
 
